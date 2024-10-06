@@ -23,6 +23,11 @@ a {
     list-style: none;
   }
   
+img-size {
+  width: 100px;
+  height: 100px;
+}
+
   .btns {
     padding: 10px 20px;
     margin-right: 6px;
