@@ -1,2 +1,4 @@
-node_modules
+/home/santus/jobDey/jobBackend/node_modules
+/home/santus/jobDey/jobBackend/.env
 .env
+node_modules
