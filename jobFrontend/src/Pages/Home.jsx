@@ -20,9 +20,9 @@ const Home = () => {
   }, []);
   
 //  handle input change
-  const [query, setOuery] = useState("");
+  const [query, setQuery] = useState("");
   const handleInputChange = (event) => {
-    setOuery(event.target.value)
+    setQuery(event.target.value)
   }
 
   // filter jobs by title
@@ -31,6 +31,7 @@ const Home = () => {
   // radio filtering
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
+    console.log(event.target.value);
   }
   // button based filtering
   const handleClick = (event) => {
@@ -66,11 +67,12 @@ const Home = () => {
     }
     // category filtering
     if (selected) {
-      filteredJobs = filteredJobs.filter(({ location, employmentType, postedDate }) => {
+      filteredJobs = filteredJobs.filter(({ location, employmentType, postedDate, category }) => {
         return (
           location.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
           employmentType.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
-          postedDate === selected
+          category.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
+          postedDate >= selected
         )
       });
     }
@@ -107,9 +109,9 @@ const Home = () => {
           {
             result.length > 0 ? (
               <div className='flex justify-center mt-4 space-x-8'>
-                <button onClick={prevPage}>Prev</button>
-                <span>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
-                <button onClick={nextPage}>Next</button>
+                <button onClick={prevPage} disabled={currentPage === 1} className='hover:underline'>Prev</button>
+                <span className='mx-2'>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
+                <button disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)} onClick={nextPage} className='hover:underline'>Next</button>
               </div>
             ) : ""
           }
