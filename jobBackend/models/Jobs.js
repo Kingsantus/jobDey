@@ -16,6 +16,7 @@ const jobSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true,
+        unique: true,
         lowercase:true,
     },
     companyName:{
@@ -52,8 +53,9 @@ const jobSchema = new mongoose.Schema({
         type:Date,
     },
     visibility:{
-        type:Boolean,
-        default:false
+        type: String,
+        enum: ["public","private"],
+        default: "private"
     },
 }, {timestamps:true});
 

@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./db/dbConfig');
 const authRoute=require("./routes/auth");
+const jobRoute = require("./routes/job");
+const cookieparser = require('cookie-parser');
 const { errorHandler, CustomError } = require("./middlewares/error");
 
 dotenv.config()
@@ -16,13 +18,22 @@ app.use(express.json());
 // Allow the app to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
-// allowing other site access the api
-app.use(cors());
+// allowing only the fronend site access the api
+app.use(
+    cors({
+        origin: process.env.APP_ORIGIN,
+        credentials: true,
+    })
+);
+
+// allowing cookie to be parsed between frontend and backend
+app.use(cookieparser())
 
 const port = process.env.PORT || 5000;
 
 // use routes
 app.use("/api/v1/auth",authRoute);
+app.use("/api/v1/post",jobRoute);
 
 // instantiating errorHandler to app
 app.use(errorHandler);
