@@ -1,11 +1,12 @@
 const User = require('../models/Users');
 const jwt = require('jsonwebtoken');
 const { CustomError } = require("../middlewares/error");
+const { sendWelcomeEmail } = require('../mailutils/sendMailToVerify');
 // const { sendWelcomeEmail } = require('../mailutils/sendMailToVerify');
 
 const verifyEmailController = async (req, res, next) => {
     // get the token sent to user from body
-    const { code } = req.query;
+    const { code } = req.params;
     try {
         // check if the token is up to six and not empty or throw error
         if (!code) {
@@ -17,7 +18,6 @@ const verifyEmailController = async (req, res, next) => {
         const email = decoded_data.email;
         // check if any user has the email
         const user = await User.findOne({ email });
-        console.log(user)
         // throw error if no user found or expires
         if (!user) {
             throw new CustomError("Invalid token or expired token, Register again in an 1 hour", 400);
@@ -28,7 +28,7 @@ const verifyEmailController = async (req, res, next) => {
         await user.save();
 
         // send a welcome email
-        // await sendWelcomeEmail(user.email, user.username);
+        await sendWelcomeEmail(user.email, user.username);
 
         res.status(200).json({message:"Successfully verified"});
 

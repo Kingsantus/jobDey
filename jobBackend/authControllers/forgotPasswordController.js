@@ -1,5 +1,5 @@
 const { CustomError } = require('../middlewares/error');
-const User = require('../models/User');
+const User = require('../models/Users');
 const crypto = require('crypto');
 const { sendPasswordResetEmail } = require('../mailutils/sendMailToResetPassword');
 
@@ -22,22 +22,18 @@ const forgotPasswordController = async (req, res, next) => {
         // generate reset token using crypto
         const resetToken = crypto.randomBytes(20).toString("hex")
         // reset token expires at 15 minutes
-        const resetTokenExpiresAt = Date.now() + 15 * 60 * 1000; // 15 minute
-
-        // add to reset info to user
-        // const updatedPost = await Post.findByIdAndUpdate(
-        //     postId,
-        //     { caption },
-        //     { new: true }
-        // );
+        const resetTokenExpiresAt = Date.now() + 20 * 60 * 1000; // 15 minute
+        // add the information into the database
         user.resetPasswordToken = resetToken;
         user.resetPasswordExpiresAt = resetTokenExpiresAt;
 
         // save user
         await user.save();
-        console.log(resetToken);
+        // url for change of password
+        const url = `${process.env.APP_ORIGIN}/api/v1/auth/reset-password/?code=${resetToken}&exp=${resetTokenExpiresAt}`
+        console.log(url)
         // send email to user
-        await sendPasswordResetEmail(user.email, `${process.env.URL}/api/v1/auth/reset-password/${resetToken}`);
+        await sendPasswordResetEmail(user.email, url);
 
         res.status(200).json({ message: "Reset link has been sent to your email." });
     } catch (error) {

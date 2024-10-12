@@ -2,16 +2,18 @@ const dotenv = require('dotenv');
 const { VERIFICATION_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } = require('./emailTemplate');
 const { transporter } = require('./mail.config');
 dotenv.config();
-const { AUTH_EMAIL } = process.env;
+const { AUTH_EMAIL, APP_ORIGIN } = process.env;
 
 const sendVerificationEmail = async (email, verificationToken) => {
     const receiver = email;
+    // url of verification link
+    const url = `${APP_ORIGIN}/api/v1/auth/verify-email/${verificationToken}`
     // setup e-mail data
     const mailOptions = {
         from: AUTH_EMAIL,
         to: receiver,
         subject:"Verify your email",
-        html: VERIFICATION_EMAIL_TEMPLATE.replace('{verificationToken}', verificationToken),
+        html: VERIFICATION_EMAIL_TEMPLATE.replace('{url}', url),
         category:"Email Verification"
     };
     try {
@@ -36,7 +38,7 @@ const sendWelcomeEmail = async (email, name) => {
     const mailOptions = {
         from: AUTH_EMAIL,
         to: receiver,
-        subject:"Welcome to Petiverse",
+        subject:"Welcome to JobDey",
         html: WELCOME_EMAIL_TEMPLATE.replace('{name}', name),
         category:"Welcome Email"
     };

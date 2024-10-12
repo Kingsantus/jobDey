@@ -1,6 +1,7 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { sendVerificationEmail } = require('../mailutils/sendMailToVerify')
 const { CustomError } = require('../middlewares/error');
 const countries = require('../utils/countires');
 
@@ -24,7 +25,7 @@ const registerContoller = async (req, res, next) => {
          }
          // check if password and confirmPassword is not the same and throw error
          if (password !== confirmPassword) {
-             throw new CustomError("Password not the same", 400);
+             throw new CustomError("Passwords do not match", 400);
          }
          // check if the length of password is less than 8 char
          if (password.length < 8){
@@ -36,16 +37,16 @@ const registerContoller = async (req, res, next) => {
          }
          // check if firstName is less than 2 and allow only string and space inbetween character
          if (firstName < 2 || !/^[a-zA-Z\s]+$/.test(firstName)) {
-             throw new CustomError("Name of pet should be more than 2 and only string", 400);
+             throw new CustomError("First name should be more than 2 and only string", 400);
          }
 
          // check if lastName is less than 2 and allow only string and space inbetween character
          if (lastName < 2 || !/^[a-zA-Z\s]+$/.test(lastName)) {
-            throw new CustomError("Name of pet should be more than 2 and only string", 400);
+            throw new CustomError("Last name should be more than 2 and only string", 400);
         }
 
         // check if country is ""
-        if (country === "" || !countries.includes(country)) {
+        if (country === "" || !countries.includes(country.toLowerCase())) {
             throw new CustomError("Please Choose a country", 400);
         }
  
@@ -54,7 +55,7 @@ const registerContoller = async (req, res, next) => {
          if (existingUser) {
              // if they exist throw error
              if (existingUser.isVerified) {
-                 throw new CustomError("Username or Email already exists!", 400);
+                 throw new CustomError("User already exists!", 400);
              } else {
                  // if existing user is not verified delete the account and register again
                  if (!existingUser.isVerified){
@@ -78,16 +79,15 @@ const registerContoller = async (req, res, next) => {
                  country
              });
             // Create a new user and generate verification token
-            const verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '15m' });
-            console.log(verificationToken)
+            const verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '20m' });
             // save the information
             const savedUser=await newUser.save();
             // send email to user
-            //  await sendVerificationEmail(savedUser.email, verificationToken);
+            await sendVerificationEmail(savedUser.email, verificationToken);
  
             // remove email, phoneNumber, password
             // display other information 
-            res.status(201).json({ message:"User created Successfully"});
+            res.status(201).json({message:"Created Successfully"});
          }    
     } catch(error) {
         next(error);

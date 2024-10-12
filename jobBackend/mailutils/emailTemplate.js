@@ -7,17 +7,17 @@ const VERIFICATION_EMAIL_TEMPLATE = `
   <title>Verify Your Email</title>
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+  <div style="background: linear-gradient(to right, #3F84F6, #3F84F6); padding: 20px; text-align: center;">
     <h1 style="color: white; margin: 0;">Verify Your Email</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>Thank you for signing up to Petiverse! Your verification code is:</p>
+    <p>Hi,</p>
+    <p>Thank you for signing up to JobDey! Your verification link is below:</p>
     <div style="text-align: center; margin: 30px 0;">
-      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">{verificationToken}</span>
+      <a href="{url}" style="background-color: #3F84F6; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
     </div>
-    <p>Enter this code on the verification page to complete your registration.</p>
-    <p>This code will expire in 15 minutes for security reasons.</p>
+    <p>Click the verification link to complete your registration.</p>
+    <p>This code will expire in 20 minutes for security reasons.</p>
     <p>If you didn't create an account with us, please ignore this email.</p>
     <p>Best regards,<br>JobDey</p>
   </div>
@@ -34,21 +34,21 @@ const WELCOME_EMAIL_TEMPLATE = `
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Petiverse</title>
+  <title>Welcome to JobDey</title>
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Welcome to Petiverse</h1>
+  <div style="background: linear-gradient(to right, #3F84F6, #3F84F6); padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">Welcome to JobDey</h1>
   </div>
-  <div style="max-width: 150px, margin: 0 auto, display: block><img src="" alt="Petiverse Logo"></div>
+  <div style="max-width: 150px, margin: 0 auto, display: block><img src="" alt="JobDey Logo"></div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
     <p>Welcome, {name}!</p>
     <p>Thank you for choosing JobDey!. We are happy to see you on board.</p>
-    <p>To get started. do this next step.</p>
+    <p>To get started.</p>
     <div style="text-align: center; margin: 30px 0;">
-      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">Login</span>
+      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #3F84F6;">Login</span>
     </div>
-    <p>We hope to see you connect with other pet owner and tell the story of you pet</p>
+    <p>We hope to see you get the dream job you hope for, and remember to check in any time.</p>
     <p>If you need some help don't hesistate to reach out to customer care.</p>
     <p>Best regards,<br>JobDey</p>
   </div>
@@ -68,14 +68,14 @@ const PASSWORD_RESET_SUCCESS_TEMPLATE = `
   <title>Password Reset Successful</title>
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+  <div style="background: linear-gradient(to right, #3F84F6, #3F84F6); padding: 20px; text-align: center;">
     <h1 style="color: white; margin: 0;">Password Reset Successful</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
     <p>Hello, {name}</p>
     <p>We're writing to confirm that your password has been successfully reset.</p>
     <div style="text-align: center; margin: 30px 0;">
-      <div style="background-color: #4CAF50; color: white; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; display: inline-block; font-size: 30px;">
+      <div style="background-color: #3F84F6; color: white; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; display: inline-block; font-size: 30px;">
         ✓
       </div>
     </div>
@@ -105,7 +105,7 @@ const PASSWORD_RESET_REQUEST_TEMPLATE = `
   <title>Reset Your Password</title>
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+  <div style="background: linear-gradient(to right, #3F84F6, #3F84F6); padding: 20px; text-align: center;">
     <h1 style="color: white; margin: 0;">Password Reset</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
@@ -113,9 +113,9 @@ const PASSWORD_RESET_REQUEST_TEMPLATE = `
     <p>We received a request to reset your password. If you didn't make this request, please ignore this email.</p>
     <p>To reset your password, click the button below:</p>
     <div style="text-align: center; margin: 30px 0;">
-      <a href="{resetURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+      <a href="{resetURL}" style="background-color: #3F84F6; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
     </div>
-    <p>This link will expire in 15 minutes for security reasons.</p>
+    <p>This link will expire in 20 minutes for security reasons.</p>
     <p>Best regards,<br>JobDey</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">

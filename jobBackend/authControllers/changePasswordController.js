@@ -1,11 +1,15 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/Users');
 const { CustomError } = require('../middlewares/error');
+const { sendResetSuccessEmail } = require('../mailutils/sendMailToResetPassword');
 // const { sendResetSuccessEmail } = require('../mailutils/sendMailToResetPassword');
 
 const changePasswordController = async (req, res, next) => {
     // get the token from the params
-    const { token } = req.params;
+    const { code } = req.query;
+    console.log(code)
+    const token = code;
+
     // get the password and confirm password from body
     const { password, confirmPassword } = req.body;
     try {
@@ -50,7 +54,10 @@ const changePasswordController = async (req, res, next) => {
         await user.save();
         await sendResetSuccessEmail(user.email, user.username);
 
-        res.status(200).json("Password reset successfully")
+        res.clearCookie("accessToken")
+            .clearCookie("refreshToken", { path: "/api/v1/auth/refresh" })
+            .status(200)
+            .json("Password reset successfully");
     } catch(error) {
         next(error);
     }

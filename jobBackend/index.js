@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./db/dbConfig');
 const authRoute=require("./routes/auth");
 const jobRoute = require("./routes/job");
+const userRoute = require("./routes/user");
 const cookieparser = require('cookie-parser');
 const { errorHandler, CustomError } = require("./middlewares/error");
 
@@ -34,6 +35,7 @@ const port = process.env.PORT || 5000;
 // use routes
 app.use("/api/v1/auth",authRoute);
 app.use("/api/v1/post",jobRoute);
+app.use("/api/v1/user",userRoute);
 
 // instantiating errorHandler to app
 app.use(errorHandler);
