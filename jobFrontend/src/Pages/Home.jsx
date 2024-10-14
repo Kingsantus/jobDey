@@ -6,6 +6,7 @@ import Sidebar from '../sidebar/Sidebar';
 import NewsLetter from '../components/NewsLetter';
 
 const Home = () => {
+  console.log("Home component rendered");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

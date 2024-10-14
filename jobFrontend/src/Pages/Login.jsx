@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthProvider';
 import useCheckAuthentication from '../../context/CheckAuth';
 
 
@@ -10,7 +9,6 @@ const Login = () => {
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
 
   useCheckAuthentication();
 
