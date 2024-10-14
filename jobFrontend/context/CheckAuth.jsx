@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 
 const useCheckAuthentication = () => {
     const navigate = useNavigate();
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
     useEffect(() => {
         const checkAuthentication = async () => {
             try {

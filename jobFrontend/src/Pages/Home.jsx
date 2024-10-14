@@ -6,12 +6,12 @@ import Sidebar from '../sidebar/Sidebar';
 import NewsLetter from '../components/NewsLetter';
 
 const Home = () => {
-  console.log("Home component rendered");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  
 
   useEffect(() => {
     setIsLoading(true)
@@ -35,7 +35,6 @@ const Home = () => {
   // radio filtering
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
-    console.log(event.target.value);
   }
   // button based filtering
   const handleClick = (event) => {
