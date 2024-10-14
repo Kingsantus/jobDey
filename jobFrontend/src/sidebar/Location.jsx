@@ -3,7 +3,7 @@ import InputField from '../components/InputField'
 
 const Location = ({handleChange, jobs}) => {
   // Extract unique locations from jobs data
-  const locations = [...new Set(jobs.map((job) => job.location))];
+  const locations = [...new Set(jobs.map((job) => job.country))];
   return (
     <div>
         <h4 className='text-lg font-medium mb-2'>Location</h4>

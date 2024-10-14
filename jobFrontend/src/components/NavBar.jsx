@@ -10,7 +10,7 @@ const NavBar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
     const navItems = [
-      {path: "/", title: "Search"},
+      {path: "/home", title: "Search"},
       {path: "/jobs", title: "Jobs"},
       {path: "/location", title: "Locations"},
       {path: "/post-job", title: "Post a Job"},

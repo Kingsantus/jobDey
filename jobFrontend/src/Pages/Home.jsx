@@ -14,9 +14,11 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch("jobs.json").then(res => res.json()).then(data => {
-      setJobs(data);
-      setIsLoading(false);
+    fetch("http://localhost:5000/api/v1/post/all-jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        setJobs(data);
+        setIsLoading(false);
     })
   }, []);
   
@@ -68,9 +70,9 @@ const Home = () => {
     }
     // category filtering
     if (selected) {
-      filteredJobs = filteredJobs.filter(({ location, employmentType, postedDate, category }) => {
+      filteredJobs = filteredJobs.filter(({ country, employmentType, postedDate, category }) => {
         return (
-          location.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
+          country.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
           employmentType.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
           category.toLocaleLowerCase() === selected.toLocaleLowerCase() ||
           postedDate >= selected

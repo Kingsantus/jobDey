@@ -1,12 +1,25 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector"
+import { CountryDropdown } from "react-country-region-selector"
 
 const PostJob = () => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
   const [country, setCountry] = useState('');
   const onSubmit = (data) => {
     console.log({...data, country});
+    fetch("http://localhost:5000/api/v1/post/create", {
+      method: "POST",
+      headers: {"content-Type": "application/json"},
+      body: JSON.stringify(data)
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.acknowledged === true) {
+          alert({"message":"Job Posted Successfully!"})
+        }
+        reset();
+      });
   };
   
   return (
