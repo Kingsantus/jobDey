@@ -11,14 +11,14 @@ const defaults = {
 const getAccessTokenCookieOptions = () => {
     return {
         ...defaults,
-        maxAge: new Date(Date.now() + 15 * 60 * 1000) // Expires in 15 minutes
+        maxAge: 15 * 60 * 1000 // Expires in 15 minutes
     };
 };
 
 const getRefreshTokenCookieOptions = () => {
     return {
         ...defaults,
-        maxAge: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires in 24 hours
+        maxAge: 24 * 60 * 60 * 1000, // Expires in 24 hours
         path: "/api/v1/auth/refresh"
     };
 };

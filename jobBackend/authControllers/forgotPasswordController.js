@@ -30,12 +30,12 @@ const forgotPasswordController = async (req, res, next) => {
         // save user
         await user.save();
         // url for change of password
-        const url = `${process.env.APP_ORIGIN}/api/v1/auth/reset-password/?code=${resetToken}&exp=${resetTokenExpiresAt}`
+        const url = `${process.env.APP_ORIGIN}/password/reset?code=${resetToken}&exp=${resetTokenExpiresAt}`
         console.log(url)
         // send email to user
         await sendPasswordResetEmail(user.email, url);
 
-        res.status(200).json({ message: "Reset link has been sent to your email." });
+        res.status(200).json({ success: true, message: "Reset link has been sent to your email." });
     } catch (error) {
         next(error);
     }

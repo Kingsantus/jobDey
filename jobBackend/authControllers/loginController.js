@@ -7,15 +7,15 @@ const { setAuthCookies } = require('../middlewares/cookies');
 
 const loginController = async (req, res, next) => {
   try{
-    let user;
     const userAgent = req.headers['user-agent'];
     // from the json data send check if the user with
     // the email or username exist
-    if (req.body.email){
-      user=await User.findOne({email:req.body.email})
-    } else {
-      user=await User.findOne({username:req.body.username});
-    }
+    const user = await User.findOne({
+      $or: [
+        { email: req.body.emailOrUsername },
+        { username: req.body.emailOrUsername }
+      ]
+    });    
     
     // return error if no user have same email
     if(!user) {
@@ -23,9 +23,9 @@ const loginController = async (req, res, next) => {
     }
 
     // if user is not verified
-    // if (!user.isVerified){
-    //   throw new CustomError("Verify your account or register", 404);
-    // };
+    if (!user.isVerified){
+      throw new CustomError("Verify your account or register", 404);
+    };
 
     // verify the password of user found with sent password
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
@@ -57,7 +57,8 @@ const loginController = async (req, res, next) => {
     // update last login code of the user
     user.lastLogin = new Date();
     // storing the token in the cookie
-    return setAuthCookies(res, accessTokenGenerated, refreshTokenGenerated).status(200).json({ message:"Login Successfully"});
+    setAuthCookies(res, accessTokenGenerated, refreshTokenGenerated);
+    return res.status(200).json({ success: true, message: "Login Successfully" });
 
   } catch(error) {
     next(error);

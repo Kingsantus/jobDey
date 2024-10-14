@@ -14,7 +14,7 @@ const VERIFICATION_EMAIL_TEMPLATE = `
     <p>Hi,</p>
     <p>Thank you for signing up to JobDey! Your verification link is below:</p>
     <div style="text-align: center; margin: 30px 0;">
-      <a href="{url}" style="background-color: #3F84F6; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+      <a href="{url}" style="background-color: #3F84F6; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Verify Your Account</a>
     </div>
     <p>Click the verification link to complete your registration.</p>
     <p>This code will expire in 20 minutes for security reasons.</p>

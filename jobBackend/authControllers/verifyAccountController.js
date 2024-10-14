@@ -30,7 +30,7 @@ const verifyEmailController = async (req, res, next) => {
         // send a welcome email
         await sendWelcomeEmail(user.email, user.username);
 
-        res.status(200).json({message:"Successfully verified"});
+        res.status(200).json({ success: true, message:"Successfully verified" });
 
 
     } catch(error) {

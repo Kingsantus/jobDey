@@ -87,7 +87,7 @@ const registerContoller = async (req, res, next) => {
  
             // remove email, phoneNumber, password
             // display other information 
-            res.status(201).json({message:"Created Successfully"});
+            res.status(201).json({ success: true, message:"Created Successfully, check your email (inbox/spam) to verify your Account" });
          }    
     } catch(error) {
         next(error);

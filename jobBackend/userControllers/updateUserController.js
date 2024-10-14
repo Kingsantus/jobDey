@@ -1,5 +1,5 @@
 const { CustomError } = require('../middlewares/error');
-const User = require('../models/User');
+const User = require('../models/Users');
 
 
 const updateUserController = async (req, res, next) => {
@@ -13,7 +13,7 @@ const updateUserController = async (req, res, next) => {
             throw new CustomError("You have to login first", 401);
         }
         // Only allow updates to bio and fullname
-        const allowedFields = ['bio', 'fullname'];
+        const allowedFields = ['firstName', 'lastName', 'country'];
         const filteredUpdateData = {};
 
         // Filter updateData to only include allowed fields
@@ -25,7 +25,7 @@ const updateUserController = async (req, res, next) => {
 
         // Check if there's any valid data to update
         if (Object.keys(filteredUpdateData).length === 0) {
-            throw new CustomError('Only bio and fullname can be updated', 400);
+            throw new CustomError("You can't updated that!", 400);
         }
 
         // Find the user by userId
@@ -41,10 +41,9 @@ const updateUserController = async (req, res, next) => {
         // save to database
         await userToUpdate.save();
         // send response successfully
-        res.status(200).json({message:"User updated Successfully!", user:{
+        res.status(200).json({ success: true, message:"User updated Successfully!", user:{
             ...userToUpdate._doc,
             password:undefined,
-            phoneNumber:undefined,
             email:undefined
         }});
     } catch(error) {

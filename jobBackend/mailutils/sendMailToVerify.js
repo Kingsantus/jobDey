@@ -7,7 +7,7 @@ const { AUTH_EMAIL, APP_ORIGIN } = process.env;
 const sendVerificationEmail = async (email, verificationToken) => {
     const receiver = email;
     // url of verification link
-    const url = `${APP_ORIGIN}/api/v1/auth/verify-email/${verificationToken}`
+    const url = `${APP_ORIGIN}/verify-email/${verificationToken}`
     // setup e-mail data
     const mailOptions = {
         from: AUTH_EMAIL,

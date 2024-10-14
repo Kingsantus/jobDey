@@ -23,7 +23,7 @@ const logoutController = async (req, res, next) => {
     res.clearCookie("accessToken")
       .clearCookie("refreshToken", { path: "/api/v1/auth/refresh" })
       .status(200)
-      .json("User logged out successfully!");
+      .json({ success: true, message:"User logged out successfully!" });
   }
   catch(error){
     next(error);

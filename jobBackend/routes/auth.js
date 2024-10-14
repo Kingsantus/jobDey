@@ -30,7 +30,7 @@ router.get("/refresh", refreshController);
 router.post("/forgot-password", forgotPasswordController);
 
 // Change Password
-router.post("/reset-password/", changePasswordController);
+router.post("/password/reset", changePasswordController);
 
 
 module.exports = router;

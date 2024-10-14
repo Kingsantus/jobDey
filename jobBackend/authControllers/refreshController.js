@@ -43,7 +43,7 @@ const refreshController = async (req, res, next) => {
         }
 
         // Send the response with a success message
-        response.status(200).json({ message: "Access token refreshed" });
+        response.status(200).json({ success: true, message: "Access token refreshed" });
     } catch(error) {
         next(error);
     }

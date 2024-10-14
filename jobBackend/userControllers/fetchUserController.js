@@ -10,12 +10,16 @@ const getUserController = async (req, res, next) => {
         if (!userId) {
             throw new CustomError("You have to login first", 401);
         }
-        // get user from 
+        // get user from database
+        const user = await User.findById(userId);
+        // throw error if not found
+        if (!user) {
+            throw new CustomError("User don't exist", 500);
+        }
         // send response successfully
-        res.status(200).json({message:"User updated Successfully!", user:{
-            ...userToUpdate._doc,
+        res.status(200).json({user:{
+            ...user._doc,
             password:undefined,
-            phoneNumber:undefined,
             email:undefined
         }});
     } catch(error) {
