@@ -38,9 +38,13 @@ const About = () => {
             Job Dey
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-300">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
+          Welcome to Jobdey—your ultimate destination for tech professionals seeking the best job offers from around the globe. We bring the top opportunities right to your fingertips, ensuring you never miss out on the perfect role again.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-300">
+          At Jobdey, we believe you shouldn’t have to search endlessly or risk losing out on your dream job. Our platform gathers all the best offers in one place, so all you have to do is show up and claim what’s yours. Whether you’re just starting out or looking to level up in your tech career, Jobdey is here to help you shine brighter than ever.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-300">
+          Be a star, seize your opportunity, and let your career soar—courtesy of Kingsantus, ALX alumni.
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
@@ -64,12 +68,12 @@ const About = () => {
                 Offices worldwide
               </dt>
               <dd className="text-2xl font-bold leading-9 tracking-tight text-white">
-                12
+                remote, hybrid and onsite
               </dd>
             </div>
             <div className="flex flex-col-reverse">
               <dt className="text-base leading-7 text-gray-300">
-                Full-time colleagues
+                categories of your role
               </dt>
               <dd className="text-2xl font-bold leading-9 tracking-tight text-white">
                 300+
@@ -77,14 +81,14 @@ const About = () => {
             </div>
             <div className="flex flex-col-reverse">
               <dt className="text-base leading-7 text-gray-300">
-                Hours per week
+                Hours per Day
               </dt>
               <dd className="text-2xl font-bold leading-9 tracking-tight text-white">
-                40
+                24 Hours
               </dd>
             </div>
             <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-300">Paid time off</dt>
+              <dt className="text-base leading-7 text-gray-300">Job Offer</dt>
               <dd className="text-2xl font-bold leading-9 tracking-tight text-white">
                 Unlimited
               </dd>
