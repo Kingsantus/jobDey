@@ -8,7 +8,7 @@ const ForgotPassword = () => {
   const [forgotPasswordError, setForgotPasswordError] = useState('');
   const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState('');
 
-  useCheckAuthentication();
+  // useCheckAuthentication();
 
   const onSubmit = async (data) => {
     setForgotPasswordError('');
