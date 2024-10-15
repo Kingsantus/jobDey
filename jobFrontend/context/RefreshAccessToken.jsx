@@ -1,6 +1,6 @@
 export const refreshAccessToken = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/v1/auth/refresh', {
+        const response = await fetch('https://jobdey-api.onrender.com/api/v1/auth/refresh', {
             method: 'GET',
             credentials: 'include',
         });

@@ -15,7 +15,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch("http://localhost:5000/api/v1/post/all-jobs")
+    fetch("https://jobdey-api.onrender.com/api/v1/post/all-jobs")
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);

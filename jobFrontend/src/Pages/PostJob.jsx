@@ -6,7 +6,7 @@ const PostJob = () => {
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
   const [country, setCountry] = useState('');
   const onSubmit = (data) => {
-    fetch("http://localhost:5000/api/v1/post/create", {
+    fetch("https://jobdey-api.onrender.com/api/v1/post/create", {
       method: "POST",
       credentials: 'include',
       headers: {"content-Type": "application/json"},

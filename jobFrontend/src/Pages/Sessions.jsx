@@ -8,7 +8,7 @@ const Sessions = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch('http://localhost:5000/api/v1/user/sessions', {
+        fetch('https://jobdey-api.onrender.com/api/v1/user/sessions', {
             method: 'GET',
             credentials: 'include',  // Include credentials (cookies)
         })

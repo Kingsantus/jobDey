@@ -16,7 +16,7 @@ const ChangePassword = () => {
 
         try {
             // Send request to backend
-            const response = await fetch('http://localhost:5000/api/v1/user/change-password', {
+            const response = await fetch('https://jobdey-api.onrender.com/api/v1/user/change-password', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),

@@ -13,7 +13,7 @@ const UpdateUserToAdmin = () => {
   useEffect(() => {
     const fetchJobData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/post/all-jobs/${id}`, {
+        const response = await fetch(`https://jobdey-api.onrender.com/api/v1/post/all-jobs/${id}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -56,7 +56,7 @@ const UpdateUserToAdmin = () => {
   const onSubmit = async (data) => {
     try {
       // Make the fetch request with await
-      const response = await fetch(`http://localhost:5000/api/v1/post/update/${id}`, {
+      const response = await fetch(`https://jobdey-api.onrender.com/api/v1/post/update/${id}`, {
         method: "PUT",
         credentials: 'include',
         headers: { "Content-Type": "application/json" },

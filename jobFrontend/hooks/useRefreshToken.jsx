@@ -5,7 +5,7 @@ const useRefreshToken = () => {
 
     const refresh = async () => {
         // Fetching a new access token from the server
-        const response = await fetch("http://localhost:5000/api/v1/auth/refresh", {
+        const response = await fetch("https://jobdey-api.onrender.com/api/v1/auth/refresh", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: 'include'  // This sends cookies with the request

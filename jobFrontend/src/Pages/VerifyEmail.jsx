@@ -13,7 +13,7 @@ const VerifyEmail = () => {
       const fetchVerificationData = async () => {
         try {
           // Sending GET request to the backend with the verification code in the URL
-          const response = await fetch(`http://localhost:5000/api/v1/auth/verify-email/${code}`, {
+          const response = await fetch(`https://jobdey-api.onrender.com/api/v1/auth/verify-email/${code}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

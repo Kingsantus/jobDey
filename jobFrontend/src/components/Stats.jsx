@@ -34,9 +34,9 @@ const Stats = () => {
 
         {/* Card 4 */}
         <div className="bg-gray-300 shadow-md rounded-lg p-4 h-full">
-          <a href="#" className="block">
-            <h5 className="text-xl font-bold text-gray-900 mb-2">Google</h5>
-            <p className="text-gray-700">Get certified with career-focused programs designed by Google.</p>
+          <a href="https://www.udemy.com/" className="block">
+            <h5 className="text-xl font-bold text-gray-900 mb-2">Udemy</h5>
+            <p className="text-gray-700">Learn at your own pace with affordable courses taught by industry experts.</p>
           </a>
         </div>
       </div>

@@ -23,7 +23,7 @@ const Profile = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await useFetchProtected('http://localhost:5000/api/v1/user/update', {
+            const response = await useFetchProtected('https://jobdey-api.onrender.com/api/v1/user/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

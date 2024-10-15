@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     setForgotPasswordError('');
     setForgotPasswordSuccess('');
     try {
-      const response = await fetch("http://localhost:5000/api/v1/auth/forgot-password", {
+      const response = await fetch("https://jobdey-api.onrender.com/api/v1/auth/forgot-password", {
         method: "POST",
         headers: {"content-Type": "application/json"},
         body: JSON.stringify(data)

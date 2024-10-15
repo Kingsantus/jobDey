@@ -11,7 +11,7 @@ const JobPosted = () => {
     const itemsPerPage = 10;
     useEffect(() => {
         setIsLoading(true),
-        fetch(`http://localhost:5000/api/v1/post/all-jobs`)
+        fetch(`https://jobdey-api.onrender.com/api/v1/post/all-jobs`)
             .then((res) => res.json())
             .then((data) => {
                 setJobs(data);
@@ -42,7 +42,7 @@ const JobPosted = () => {
     }
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/post/delete/${id}`, {
+            const response = await fetch(`https://jobdey-api.onrender.com/api/v1/post/delete/${id}`, {
                 method: "DELETE",
                 credentials: 'include',
                 headers: {
