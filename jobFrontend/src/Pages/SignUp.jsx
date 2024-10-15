@@ -10,7 +10,7 @@ const SignUp = () => {
   const [registerError, setRegisterError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState('');
   
-  useCheckAuthentication();
+  // useCheckAuthentication();
 
   const onSubmit = async (data) => {
     setRegisterError('');
