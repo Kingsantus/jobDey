@@ -1,7 +1,7 @@
 const { CustomError } = require('../middlewares/error');
 const User = require('../models/Users');
 
-const updateUserController = async (req, res, next) => {
+const changeUserRoleController = async (req, res, next) => {
     try {
         // Get update data from the request body
         const updateData = req.body;
@@ -67,4 +67,4 @@ const updateUserController = async (req, res, next) => {
     }
 };
 
-module.exports = updateUserController;
+module.exports = changeUserRoleController;

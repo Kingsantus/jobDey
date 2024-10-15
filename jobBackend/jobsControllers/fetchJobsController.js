@@ -3,6 +3,15 @@ const User = require('../models/Users');
 const { CustomError } = require('../middlewares/error');
 // const { getValue, setValue } = require('../utils/redisConfig');
 
+
+const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = (`0${date.getMonth() + 1}`).slice(-2); // Ensure month is 2 digits
+    const day = (`0${date.getDate()}`).slice(-2); // Ensure day is 2 digits
+    return `${year}-${month}-${day}`;
+  };
+
 /**
  * 
  * @param {userId} req 
@@ -13,11 +22,11 @@ const { CustomError } = require('../middlewares/error');
 const getJobsController = async (req, res, next) => {
     try {
         // get the id of user from the verifiedToken of user in cookie
-        // const userId = req.userId;
+        const userId = req.userId;
         // throw error if no user Id
-        // if (!userId) {
-        //     return res.status(401).json({ message: "You have to login first" });
-        // }
+        if (!userId) {
+            return res.status(401).json({ message: "You have to login first" });
+        }
         // // Define cache key
         // const cacheKey = `post_${userId}`;
 
@@ -85,17 +94,17 @@ const getAPostController = async (req, res, next) => {
             return res.status(401).json({ message: "You have to login first" });
         }
         // Define cache key
-        const cacheKey = `post_${postId}`;
+        // const cacheKey = `post_${postId}`;
 
         // Check Redis cache for verified users data
-        const cachedUser = await getValue(cacheKey);
-        if (cachedUser) {
-            // Return the cached users if they exist
-            return res.status(200).json({
-                message: "posts (from cache)",
-                user: cachedUser
-             });
-         }
+        // const cachedUser = await getValue(cacheKey);
+        // if (cachedUser) {
+        //     // Return the cached users if they exist
+        //     return res.status(200).json({
+        //         message: "posts (from cache)",
+        //         user: cachedUser
+        //      });
+        //  }
 
         // Find the current user by ID
         const user = await User.findById(userId);
@@ -104,274 +113,35 @@ const getAPostController = async (req, res, next) => {
         if (!user) {
             throw new CustomError("User not found", 404);
         }
+        // if user is not admin throw error
+        if (user.role !== 'admin'){
+            throw new CustomError("You are forbidden", 403);
+        }
 
         // Fetch the post from the database
-        const post = await Post.findById(postId)
-            .populate("user", "username fullName profilePicture");
+        const post = await Job.findById(postId)
 
         // Throw an error if the post is not found
         if (!post) {
             throw new CustomError("Post not found", 404);
         }
-        // if the post owner didnt block the user
-        const postAuthor = await User.findById(post.user._id);
-        // Check if the post visibility is allowed for the current user
-        // Check if the post author has blocked the current user
-        if (postAuthor.blocklist.includes(userId)) {
-            return res.status(403).json({ message: "You are not authorized to view this post" });
-        }
-
-        // Check if the post is private and the current user is not following the author
-        if (post.visibility === 'friends' && !user.following.includes(postAuthor._id)) {
-            return res.status(403).json({ message: "You are not authorized to view this private post" });
-        }
         // Cache the result in Redis for future requests, set expiration time 90 sec
-        await setValue(cacheKey, post, 7200); // 2 hours
+        // await setValue(cacheKey, post, 7200); // 2 hours
 
         // Return the post in the response
-        res.status(200).json(post);
+        // Modify the postedDate field before returning the response
+        const formattedPost = {
+            ...post._doc,  // Spread the document data (to handle Mongoose document object properly)
+            postedDate: formatDate(post.postedDate)  // Format the postedDate
+        };
+
+        // Return the formatted post
+        res.status(200).json({ post: formattedPost });
 
     } catch (error) {
         next(error);
     }
 };
-
-const getUserPostsController = async (req, res, next) => {
-    try {
-        // get the id of user from the verifiedToken of user in cookie
-        const userId = req.userId;
-        // throw error if no user Id
-        if (!userId) {
-            throw new CustomError("You have to login first", 401);
-        }
-        // Define cache key
-        const cacheKey = `userpost_${userId}`;
-
-        // Check Redis cache for verified users data
-        const cachedUser = await getValue(cacheKey);
-        if (cachedUser) {
-            // Return the cached users if they exist
-            return res.status(200).json({
-                message: "posts (from cache)",
-                user: cachedUser
-             });
-         }
-        // get user object
-        const user = await User.findById(userId);
-        // throw error if not found
-        if (!user) {
-            throw new CustomError("User not found", 404);
-        }
-        // Get pagination parameters from the query string or set default values
-        const limit = parseInt(req.query.limit) || 10;
-        const page = parseInt(req.query.page) || 1;
-        // Calculate the number of posts to skip based on the current page
-        const skip = (page - 1) * limit;
-        // find all the user post
-        const userPosts = await Post.find({user:userId})
-        .populate("user", "username fullName profilePicture")
-        .skip(skip)
-        .sort({createdAt:-1})
-        .limit(limit);
-        // Cache the result in Redis for future requests, set expiration time 90 sec
-        await setValue(cacheKey, userPosts, 7200); // 2 hours
-
-        // Fetch the total number of posts by the user for pagination metadata
-        const totalPosts = await Post.countDocuments({ user: userId });
-
-        // Calculate total pages based on total posts and limit
-        const totalPages = Math.ceil(totalPosts / limit);
-
-        // Check if the user has any posts
-        if (userPosts.length === 0) {
-            return res.status(200).json({ message: "No posts found for this user" });
-        }
-
-        // Respond with the user's posts along with pagination metadata
-        res.status(200).json({
-            posts: userPosts,
-            currentPage: page,
-            totalPages: totalPages,
-            totalPosts: totalPosts
-        });
-
-    } catch (error) {
-        next (error);
-    }
-}
-
-const getAUserPostController = async (req, res, next) => {
-    try {
-        // Get the postId from the request parameters
-        const { postId } = req.params;
-    
-        // Get the userId from the verified token from cookie
-        const userId = req.userId;
-    
-        // Throw error if no userId is found (user is not logged in)
-        if (!userId) {
-            throw new CustomError("You have to login first", 401);
-        }
-        // Define cache key
-        const cacheKey = `userPost_${postId}`;
-
-        // Check Redis cache for verified users data
-        const cachedUser = await getValue(cacheKey);
-        if (cachedUser) {
-            // Return the cached users if they exist
-            return res.status(200).json({
-                message: "posts (from cache)",
-                user: cachedUser
-             });
-         }
-    
-        // Find the user object in the database using userId
-        const user = await User.findById(userId);
-    
-        // Throw error if the user is not found
-        if (!user) {
-            throw new CustomError("User not found", 404);
-        }
-    
-        // Find the specific post by postId and ensure it's owned by the user
-        const userPost = await Post.findOne({ _id: postId, user: userId })
-            .populate("user", "username fullName profilePicture");
-    
-        // Throw error if the post is not found
-        if (!userPost) {
-            throw new CustomError("Post not found or you are not authorized", 404);
-        }
-        // Cache the result in Redis for future requests, set expiration time 90 sec
-        await setValue(cacheKey, userPost, 7200); // 2 hours
-
-    
-        // Respond with the single post data
-        res.status(200).json({ post: userPost });
-    
-    } catch (error) {
-        // Handle errors and pass to the next middleware
-        next(error);
-    }    
-}
-
-const getAllPostFromAUser = async (req, res, next) => {
-    try {
-        // Get the userId from the verified token from cookie
-        const loggedUser = req.userId;
-    
-        // Throw error if no userId is found (user is not logged in)
-        if (!loggedUser) {
-            return res.status(401).json("You have to login first");
-        }
-        // get the userId from url
-        const { userId } = req.params;
-        // throw error if no Id is in the params
-        if (!userId){
-            throw new CustomError("UserId is required", 400);
-        }
-        // Define cache key
-        const cacheKey = `userpost_${userId}`;
-
-        // Check Redis cache for verified users data
-        const cachedUser = await getValue(cacheKey);
-        if (cachedUser) {
-            // Return the cached users if they exist
-            return res.status(200).json({
-                message: "posts (from cache)",
-                user: cachedUser
-             });
-         }
-        // check if the user Id is in the database
-        const user = await User.findById({_id:userId});
-        // throw error if user not found
-        if (!user){
-            throw new CustomError("User not found", 400);
-        }
-        // check if user blacklisted logged in user
-        if (user.blocklist.includes(loggedUser)){
-            return res.status(401).json("Your not authorized to view post", 401);
-        }
-        // check if loggedUser is following user to view friends visiblity 
-        // and if logged user is not following user show only public
-        const isLoggedUserFollowing = user.followers.includes(loggedUser);
-        // If not following, show only public posts
-        const visibilityFilter = isLoggedUserFollowing ? {} : { visibility: "public" };
-
-        // Fetch the posts based on visibility and userId
-        const posts = await Post.find({ user: userId, ...visibilityFilter }).sort({createdAt:-1});
-        // Cache the result in Redis for future requests, set expiration time 90 sec
-        await setValue(cacheKey, posts, 7200); // 2 hours
-
-        // Return the posts in the response
-        res.status(200).json(posts);
-    } catch {
-        next(error);
-    }
-}
-
-const getApostFromUser = async (req, res, next) => {
-    try {
-        // Get the userId from the verified token from cookie
-        const loggedUser = req.userId;
-    
-        // Throw error if no userId is found (user is not logged in)
-        if (!loggedUser) {
-            return res.status(401).json("You have to login first");
-        }
-        // get the userId from url
-        const { userId, postId } = req.params;
-        // throw error if no Id is in the params
-        if (!userId || !postId){
-            throw new CustomError("UserId and PostId is required", 400);
-        }
-        // Define cache key
-        const cacheKey = `userPost_${postId}`;
-
-        // Check Redis cache for verified users data
-        const cachedUser = await getValue(cacheKey);
-        if (cachedUser) {
-            // Return the cached users if they exist
-            return res.status(200).json({
-                message: "posts (from cache)",
-                user: cachedUser
-             });
-         }
-         // check if the user Id is in the database
-         const user = await User.findById({_id:userId});
-         // throw error if user not found
-         if (!user){
-             throw new CustomError("User not found", 400);
-         }
-         // check if user blacklisted logged in user
-        if (user.blocklist.includes(loggedUser)){
-            return res.status(401).json("Your not authorized to view post", 401);
-        }
-        //  check if the post Id is available
-        const post = await Post.findById(postId);
-        // throw error if no post find
-        if (!post) {
-            throw new CustomError("Post is not found", 400);
-        }
-        // check if the userId is the owner of the post
-        if(!user.posts.includes(postId)){
-            throw new CustomError("Post is not found", 400);
-        }
-        // Check if logged-in user is following the post author
-        const isLoggedUserFollowing = user.followers.includes(loggedUser);
-
-        // If logged-in user is not following, check post visibility
-        if (!isLoggedUserFollowing && post.visibility !== "public") {
-            return res.status(403).json({ message: "You're not authorized to view this post" });
-        }
-        // Cache the result in Redis for future requests, set expiration time 90 sec
-        await setValue(cacheKey, post, 7200); // 2 hours
-
-        res.status(200).json(post)
-        
-    } catch(error) {
-        next(error);
-    }
-}
 
 const getAllJobssForAdminController = async (req, res, next) => {
     try {
@@ -412,5 +182,6 @@ const getAllJobssForAdminController = async (req, res, next) => {
 
 module.exports = {
     getJobsController,
-    getAllJobssForAdminController
+    getAllJobssForAdminController,
+    getAPostController
 }
