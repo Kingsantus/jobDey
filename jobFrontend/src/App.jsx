@@ -21,28 +21,8 @@ import Profile from './Pages/Profile';
 import ChangePassword from './Pages/ChangePassword';
 import Sessions from './Pages/Sessions';
 import PersistLogin from './components/PersistLogin';
+import Users from './Pages/Users';
 
-
-// Create a loader function to fetch job data
-const jobLoader = async ({ params }) => {
-  console.log(`Fetching job data for ID: ${params.id}`);
-  const response = await fetch(`http://localhost:5000/api/v1/post/all-jobs/${params.id}`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Response(errorData.message || 'Failed to fetch job data', { status: response.status });
-  }
-
-  const jobData = await response.json();
-  console.log('Job Data:', jobData);
-  return jobData;
-};
 
 function App() {
   return (
@@ -71,8 +51,9 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={['admin']} />}>
           <Route path='/jobs' element={<JobPosted />} />
+          <Route path='/users' element={<Users />} />
           <Route path='/post-job' element={<PostJob />} />
-          <Route path='/edit-job/:id' element={<UpdateJob />} loader={jobLoader} />
+          <Route path='/edit-job/:id' element={<UpdateJob />} />
         </Route>
         </Route>
       </Routes>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HeadingPage = () => {
   return (
@@ -7,8 +8,8 @@ const HeadingPage = () => {
   <div  className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
     <div  className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
       <div  className="sm:max-w-lg">
-        <h1  className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Summer styles are finally here</h1>
-        <p  className="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care if you live or die.</p>
+        <h1  className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Find All Tech Job Offers in One Place</h1>
+        <p  className="mt-4 text-xl text-gray-500">We bring together job listings from various websites, giving you an advantage over others in finding the best opportunities.</p>
       </div>
       <div>
         <div  className="mt-10">
@@ -29,7 +30,7 @@ const HeadingPage = () => {
                     <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg" alt=""  className="h-full w-full object-cover object-center" />
                   </div>
                   <div  className="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg" alt=""  className="h-full w-full object-cover object-center" />
+                    <img src="https://www.alxafrica.com/wp-content/uploads/2023/12/Rectangle-15769753.png" alt=""  className="h-full w-full object-cover object-center" />
                   </div>
                   <div  className="h-64 w-44 overflow-hidden rounded-lg">
                     <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt=""  className="h-full w-full object-cover object-center" />
@@ -47,7 +48,7 @@ const HeadingPage = () => {
             </div>
           </div>
 
-          <a href="#"  className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">Shop Collection</a>
+          <Link to={'/home'}  className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">Get Started</Link>
         </div>
       </div>
     </div>

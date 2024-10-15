@@ -35,7 +35,7 @@ const NavBar = () => {
         { path: "/home", title: "Home" },
         { path: "/jobs", title: "Job Posted" },
         { path: "/post-job", title: "Post Job" },
-        { path: "/edit-job/:id", title: "Edit Job" },
+        { path: "/users", title: "All Users" },
     ];
 
     // Select nav items based on role

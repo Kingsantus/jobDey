@@ -1,26 +1,47 @@
-import React from 'react'
+import React from 'react';
 
 const Stats = () => {
   return (
-    <div  className="bg-white py-24 sm:py-32">
-  <div  className="mx-auto max-w-7xl px-6 lg:px-8">
-    <dl  className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-      <div  className="mx-auto flex max-w-xs flex-col gap-y-4">
-        <dt  className="text-base leading-7 text-gray-600">Transactions every 24 hours</dt>
-        <dd  className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">44 million</dd>
-      </div>
-      <div  className="mx-auto flex max-w-xs flex-col gap-y-4">
-        <dt  className="text-base leading-7 text-gray-600">Assets under holding</dt>
-        <dd  className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">$119 trillion</dd>
-      </div>
-      <div  className="mx-auto flex max-w-xs flex-col gap-y-4">
-        <dt  className="text-base leading-7 text-gray-600">New users annually</dt>
-        <dd  className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">46,000</dd>
-      </div>
-    </dl>
-  </div>
-</div>
-  )
-}
+    <div className="flex flex-col mb-4 items-center p-4 max-w-screen-2xl container mx-auto xl:px-24 px-4">
+      <h3 className="text-3xl font-bold text-gray-900 mb-6">Where to Upskill</h3>
+      
+      {/* Card Container */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
 
-export default Stats
+        {/* Card 1 */}
+        <div className="bg-gray-300 shadow-md rounded-lg p-4 h-full">
+          <a href="https://www.alxafrica.com/" className="block">
+            <h5 className="text-xl font-bold text-gray-900 mb-2">ALX</h5>
+            <p className="text-gray-700">Transform your career with industry-leading tech programs.</p>
+          </a>
+        </div>
+
+        {/* Card 2 */}
+        <div className="bg-gray-300 shadow-md rounded-lg p-4 h-full">
+          <a href="https://www.coursera.org/" className="block">
+            <h5 className="text-xl font-bold text-gray-900 mb-2">Coursera</h5>
+            <p className="text-gray-700">Access courses from top universities and tech companies worldwide.</p>
+          </a>
+        </div>
+
+        {/* Card 3 */}
+        <div className="bg-gray-300 shadow-md rounded-lg p-4 h-full">
+          <a href="https://www.codecademy.com/" className="block">
+            <h5 className="text-xl font-bold text-gray-900 mb-2">Codecademy</h5>
+            <p className="text-gray-700">Interactive and hands-on coding lessons to help you master programming skills.</p>
+          </a>
+        </div>
+
+        {/* Card 4 */}
+        <div className="bg-gray-300 shadow-md rounded-lg p-4 h-full">
+          <a href="#" className="block">
+            <h5 className="text-xl font-bold text-gray-900 mb-2">Google</h5>
+            <p className="text-gray-700">Get certified with career-focused programs designed by Google.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Stats;
