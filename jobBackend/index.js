@@ -20,13 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // allowing only the fronend site access the api
-app.use(
-    cors({
-        origin: process.env.APP_ORIGIN,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: true,
-    })
-);
+app.use(cors({
+  origin: 'https://jobdey-ase4.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
 // allowing cookie to be parsed between frontend and backend
 app.use(cookieparser())
