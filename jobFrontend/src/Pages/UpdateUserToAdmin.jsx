@@ -3,7 +3,7 @@ import { CountryDropdown } from 'react-country-region-selector';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-const UpdateJob = () => {
+const UpdateUserToAdmin = () => {
   const { id } = useParams();
   const [job, setJob] = useState(null); 
   const [error, setError] = useState(null);
@@ -167,4 +167,4 @@ const UpdateJob = () => {
   );
 };
 
-export default UpdateJob;
+export default UpdateUserToAdmin;

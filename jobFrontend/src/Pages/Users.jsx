@@ -6,14 +6,15 @@ const PostJob = () => {
   const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
   const [country, setCountry] = useState('');
   const onSubmit = (data) => {
+    console.log({...data, country});
     fetch("http://localhost:5000/api/v1/post/create", {
       method: "POST",
-      credentials: 'include',
       headers: {"content-Type": "application/json"},
       body: JSON.stringify(data)
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         if (result.acknowledged === true) {
           alert({"message":"Job Posted Successfully!"})
         }
