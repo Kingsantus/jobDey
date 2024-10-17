@@ -26,6 +26,8 @@ app.use(cors({
   credentials: true,
 }));
 
+app.options('*', cors());
+
 // allowing cookie to be parsed between frontend and backend
 app.use(cookieparser())
 
